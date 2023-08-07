@@ -1,2 +1,2 @@
-# terraform-provider-ksoc
-The public version of the terraform module for KSOC
+# Ksoc Terraform Provider (terraform-provider-ksoc)
+

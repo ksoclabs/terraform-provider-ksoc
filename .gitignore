@@ -1,0 +1,11 @@
+terraform-provider-*
+.idea
+.terraform
+terraform.tfstate*
+*.log
+
+build/
+dist/
+
+examples/**/.ssh
+examples/**/*.txt

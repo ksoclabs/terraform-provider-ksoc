@@ -2,7 +2,6 @@ package ksoc
 
 import (
 	"testing"
-
 )
 
 func TestProvider(t *testing.T) {

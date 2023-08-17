@@ -122,6 +122,9 @@ func resourceAwsRegisterGeneric(ctx context.Context, httpMethod string, d *schem
 	}
 
 	statusCode, _, diags := request.AuthenticatedRequest(ctx, apiUrlBase, httpMethod, targetURI, accessKey, secretKey, payload)
+	if statusCode != http.StatusOK {
+		return append(diags, diag.Errorf("Failed to register with KSOC, received HTTP status: %d", statusCode)...)
+	}
 
 	err := d.Set("api_path", targetURI)
 	if err != nil {

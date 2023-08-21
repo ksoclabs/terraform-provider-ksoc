@@ -19,11 +19,6 @@ func resourceAwsRegister() *schema.Resource {
 		DeleteContext: resourceAwsRegisterDelete,
 
 		Schema: map[string]*schema.Schema{
-			"ksoc_api_url": {
-				Type:        schema.TypeString,
-				Description: "Ksoc API to target",
-				Required:    true,
-			},
 			"ksoc_assumed_role_arn": {
 				Type:        schema.TypeString,
 				Description: "Ksoc Role to Trust",
@@ -37,26 +32,10 @@ func resourceAwsRegister() *schema.Resource {
 				Required:    true,
 				Sensitive:   true,
 			},
-			"ksoc_account_id": {
-				Type:        schema.TypeString,
-				Description: "Customer Ksoc account ID",
-				ForceNew:    true,
-				Required:    true,
-				Sensitive:   true,
-			},
-			"access_key_id": {
-				Type:        schema.TypeString,
-				Description: "Ksoc Customer Access ID",
-				ForceNew:    true,
-				Required:    true,
-				Sensitive:   true,
-			},
-			"secret_key": {
-				Type:        schema.TypeString,
-				Description: "Ksoc Customer Secret Key",
-				ForceNew:    true,
-				Required:    true,
-				Sensitive:   true,
+			"ksoc_registered": {
+				Type:        schema.TypeBool,
+				Description: "Target of the API path",
+				Computed:    true,
 			},
 
 			// Computed values
@@ -65,25 +44,22 @@ func resourceAwsRegister() *schema.Resource {
 				Description: "Target of the API path",
 				Computed:    true,
 			},
-			"ksoc_registered": {
-				Type:        schema.TypeBool,
-				Description: "Target of the API path",
-				Computed:    true,
-			},
 		},
 	}
 }
 
 func resourceAwsRegisterCreate(ctx context.Context, d *schema.ResourceData, meta any) (diags diag.Diagnostics) {
+	config := meta.(*Config)
 	httpMethod := http.MethodPost
-	setValueOnSuccess := d.Get("ksoc_api_url").(string)
+	setValueOnSuccess := config.KsocApiUrl
 	diags = resourceAwsRegisterGeneric(ctx, httpMethod, d, setValueOnSuccess, meta)
 	return diags
 }
 
 func resourceAwsRegisterRead(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
-	apiUrlBase := d.Get("ksoc_api_url").(string)
-	ksocAccountId := d.Get("ksoc_account_id").(string)
+	config := meta.(*Config)
+	apiUrlBase := config.KsocApiUrl
+	ksocAccountId := config.KsocAccountId
 	targetURI := apiUrlBase + "/accounts/" + ksocAccountId + "/cloud/aws/register"
 	err := d.Set("api_path", targetURI)
 	if err != nil {
@@ -105,11 +81,14 @@ func resourceAwsRegisterDelete(ctx context.Context, d *schema.ResourceData, meta
 }
 
 func resourceAwsRegisterGeneric(ctx context.Context, httpMethod string, d *schema.ResourceData, setValueOnSuccess string, meta any) (diags diag.Diagnostics) {
-	apiUrlBase := d.Get("ksoc_api_url").(string)
-	ksocAccountId := d.Get("ksoc_account_id").(string)
+	config := meta.(*Config)
+	apiUrlBase := config.KsocApiUrl
+	ksocAccountId := config.KsocAccountId
+
 	targetURI := apiUrlBase + "/accounts/" + ksocAccountId + "/cloud/aws/register"
-	accessKey := d.Get("access_key_id").(string)
-	secretKey := d.Get("secret_key").(string)
+	accessKey := config.AccessKeyId
+	secretKey := config.SecretKey
+	awsAccountID := d.Get("aws_account_id").(string)
 
 	type Payload struct {
 		AwsAccountId string `json:"aws_account_id"`
@@ -117,8 +96,8 @@ func resourceAwsRegisterGeneric(ctx context.Context, httpMethod string, d *schem
 	}
 
 	payload := &Payload{
-		AwsAccountId: d.Get("aws_account_id").(string),
-		AwsRoleArn:   "arn:aws:iam::" + d.Get("aws_account_id").(string) + ":role/ksoc-connect",
+		AwsAccountId: awsAccountID,
+		AwsRoleArn:   "arn:aws:iam::" + awsAccountID + ":role/ksoc-connect",
 	}
 
 	statusCode, _, diags := request.AuthenticatedRequest(ctx, apiUrlBase, httpMethod, targetURI, accessKey, secretKey, payload)

@@ -83,9 +83,8 @@ func resourceAwsRegisterDelete(ctx context.Context, d *schema.ResourceData, meta
 func resourceAwsRegisterGeneric(ctx context.Context, httpMethod string, d *schema.ResourceData, setValueOnSuccess string, meta any) (diags diag.Diagnostics) {
 	config := meta.(*Config)
 	apiUrlBase := config.KsocApiUrl
-	ksocAccountId := config.KsocAccountId
 
-	targetURI := apiUrlBase + "/accounts/" + ksocAccountId + "/cloud/aws/register"
+	targetURI := apiUrlBase + "/cloud/aws/register"
 	accessKey := config.AccessKeyId
 	secretKey := config.SecretKey
 	awsAccountID := d.Get("aws_account_id").(string)

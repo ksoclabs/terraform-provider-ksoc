@@ -4,5 +4,4 @@ resource "ksoc_aws_register" "this" {
   access_key_id         = "ksoc_access_key"
   secret_key            = "ksoc_secret_key"
   aws_account_id        = "aws_account_id"
-  ksoc_account_id       = "ksoc_account_id"
 }

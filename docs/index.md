@@ -22,6 +22,5 @@ provider "ksoc" {}
 ### Required
 
 - `access_key_id` (String, Sensitive) Ksoc Customer Access ID
-- `ksoc_account_id` (String, Sensitive) Customer Ksoc account ID
 - `ksoc_api_url` (String) Ksoc API to target
 - `secret_key` (String, Sensitive) Ksoc Customer Secret Key

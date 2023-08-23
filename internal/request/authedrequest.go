@@ -11,12 +11,9 @@ import (
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+
 	"github.com/ksoclabs/terraform-provider-ksoc/internal/auth"
 )
-
-//
-// Longer term all the authBody (apiUrlBase, accessKey, ksocAccountId, SecretKey) should come from a ksocMetadata provider object
-//
 
 func AuthenticatedRequest(
 	ctx context.Context,

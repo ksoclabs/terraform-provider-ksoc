@@ -6,6 +6,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
 	"github.com/ksoclabs/terraform-provider-ksoc/internal/request"
 )
 
@@ -59,8 +60,7 @@ func resourceAwsRegisterCreate(ctx context.Context, d *schema.ResourceData, meta
 func resourceAwsRegisterRead(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	apiUrlBase := config.KsocApiUrl
-	ksocAccountId := config.KsocAccountId
-	targetURI := apiUrlBase + "/accounts/" + ksocAccountId + "/cloud/aws/register"
+	targetURI := apiUrlBase + "/cloud/aws/register"
 	err := d.Set("api_path", targetURI)
 	if err != nil {
 		return diag.Errorf("Error setting api_path: %s", err)

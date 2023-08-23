@@ -2,6 +2,7 @@ package ksoc
 
 import (
 	"context"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -18,13 +19,6 @@ func New(version string) func() *schema.Provider {
 					Type:        schema.TypeString,
 					Description: "Ksoc API to target",
 					Required:    true,
-				},
-				"ksoc_account_id": {
-					Type:        schema.TypeString,
-					Description: "Customer Ksoc account ID",
-					ForceNew:    true,
-					Required:    true,
-					Sensitive:   true,
 				},
 				"access_key_id": {
 					Type:        schema.TypeString,
@@ -59,10 +53,9 @@ type Config struct {
 
 func configureProvider(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	config := Config{
-		KsocApiUrl:    d.Get("ksoc_api_url").(string),
-		KsocAccountId: d.Get("ksoc_account_id").(string),
-		AccessKeyId:   d.Get("access_key_id").(string),
-		SecretKey:     d.Get("secret_key").(string),
+		KsocApiUrl:  d.Get("ksoc_api_url").(string),
+		AccessKeyId: d.Get("access_key_id").(string),
+		SecretKey:   d.Get("secret_key").(string),
 	}
 
 	return &config, nil

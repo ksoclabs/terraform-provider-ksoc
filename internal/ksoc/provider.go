@@ -18,8 +18,9 @@ func New(version string) func() *schema.Provider {
 				"ksoc_api_url": {
 					Type:        schema.TypeString,
 					Description: "Ksoc API to target. Defaults to https://api.ksoc.com",
-					Computed:    true,
+					Default:     "https://api.ksoc.com",
 					Required:    false,
+					Computed:    true,
 				},
 				"access_key_id": {
 					Type:        schema.TypeString,
@@ -53,13 +54,8 @@ type Config struct {
 }
 
 func configureProvider(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
-	ksocApiUrl := d.Get("ksoc_api_url").(string)
-	if ksocApiUrl == "" {
-		ksocApiUrl = "https://api.ksoc.com"
-	}
-
 	config := Config{
-		KsocApiUrl:  ksocApiUrl,
+		KsocApiUrl:  d.Get("ksoc_api_url").(string),
 		AccessKeyId: d.Get("access_key_id").(string),
 		SecretKey:   d.Get("secret_key").(string),
 	}

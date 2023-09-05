@@ -19,8 +19,7 @@ func New(version string) func() *schema.Provider {
 					Type:        schema.TypeString,
 					Description: "Ksoc API to target. Defaults to https://api.ksoc.com",
 					Default:     "https://api.ksoc.com",
-					Required:    false,
-					Computed:    true,
+					Optional:    true,
 				},
 				"access_key_id": {
 					Type:        schema.TypeString,

@@ -3,12 +3,12 @@
 page_title: "ksoc_aws_register Resource - terraform-provider-ksoc"
 subcategory: ""
 description: |-
-  Register service with Ksoc
+  Register AWS account with Ksoc
 ---
 
 # ksoc_aws_register (Resource)
 
-Register service with Ksoc
+Register AWS account with Ksoc
 
 
 

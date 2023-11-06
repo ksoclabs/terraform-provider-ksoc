@@ -3,12 +3,12 @@
 page_title: "ksoc_azure_register Resource - terraform-provider-ksoc"
 subcategory: ""
 description: |-
-  Register service with Ksoc
+  Register Azure Subscription and Tenant with Ksoc
 ---
 
 # ksoc_azure_register (Resource)
 
-Register service with Ksoc
+Register Azure Subscription and Tenant with Ksoc
 
 
 

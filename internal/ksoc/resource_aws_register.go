@@ -12,7 +12,7 @@ import (
 
 func resourceAwsRegister() *schema.Resource {
 	return &schema.Resource{
-		Description: "Register service with Ksoc",
+		Description: "Register AWS account with Ksoc",
 
 		CreateContext: resourceAwsRegisterCreate,
 		ReadContext:   resourceAwsRegisterRead,

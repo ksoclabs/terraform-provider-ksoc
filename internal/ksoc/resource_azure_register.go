@@ -11,7 +11,7 @@ import (
 
 func resourceAzureRegister() *schema.Resource {
 	return &schema.Resource{
-		Description: "Register service with Ksoc",
+		Description: "Register Azure Subscription and Tenant with Ksoc",
 
 		CreateContext: resourceAzureRegisterCreate,
 		ReadContext:   resourceAzureRegisterRead,

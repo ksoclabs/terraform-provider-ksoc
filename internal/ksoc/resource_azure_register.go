@@ -52,7 +52,7 @@ func resourceAzureRegisterCreate(ctx context.Context, d *schema.ResourceData, me
 	config := meta.(*Config)
 	httpMethod := http.MethodPost
 	setValueOnSuccess := config.KsocApiUrl
-	diags = resourceAwsRegisterGeneric(ctx, httpMethod, d, setValueOnSuccess, meta)
+	diags = resourceAzureRegisterGeneric(ctx, httpMethod, d, setValueOnSuccess, meta)
 	return diags
 }
 
@@ -75,7 +75,7 @@ func resourceAzureRegisterUpdate(ctx context.Context, d *schema.ResourceData, me
 func resourceAzureRegisterDelete(ctx context.Context, d *schema.ResourceData, meta any) (diags diag.Diagnostics) {
 	httpMethod := http.MethodDelete
 	setValueOnSuccess := ""
-	diags = resourceAwsRegisterGeneric(ctx, httpMethod, d, setValueOnSuccess, meta)
+	diags = resourceAzureRegisterGeneric(ctx, httpMethod, d, setValueOnSuccess, meta)
 	return diags
 }
 

@@ -64,8 +64,8 @@ func configureProvider(ctx context.Context, d *schema.ResourceData) (interface{}
 }
 
 type RegistrationPayload struct {
-	Type        string      `db:"type" json:"type"`
-	Credentials Credentials `db:"credentials" json:"credentials"`
+	Type        string      `json:"type"`
+	Credentials Credentials `json:"credentials"`
 }
 
 type Credentials struct {

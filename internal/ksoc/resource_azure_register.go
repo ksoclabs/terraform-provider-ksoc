@@ -13,10 +13,10 @@ func resourceAzureRegister() *schema.Resource {
 	return &schema.Resource{
 		Description: "Register service with Ksoc",
 
-		CreateContext: resourceAwsRegisterCreate,
-		ReadContext:   resourceAwsRegisterRead,
-		UpdateContext: resourceAwsRegisterUpdate,
-		DeleteContext: resourceAwsRegisterDelete,
+		CreateContext: resourceAzureRegisterCreate,
+		ReadContext:   resourceAzureRegisterRead,
+		UpdateContext: resourceAzureRegisterUpdate,
+		DeleteContext: resourceAzureRegisterDelete,
 
 		Schema: map[string]*schema.Schema{
 			"subscription_id": {

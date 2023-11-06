@@ -84,19 +84,19 @@ func resourceAwsRegisterGeneric(ctx context.Context, httpMethod string, d *schem
 	config := meta.(*Config)
 	apiUrlBase := config.KsocApiUrl
 
-	targetURI := apiUrlBase + "/cloud/aws/register"
+	targetURI := apiUrlBase + "/cloud/register"
 	accessKey := config.AccessKeyId
 	secretKey := config.SecretKey
 	awsAccountID := d.Get("aws_account_id").(string)
 
-	type Payload struct {
-		AwsAccountId string `json:"aws_account_id"`
-		AwsRoleArn   string `json:"aws_role_arn"`
-	}
-
-	payload := &Payload{
-		AwsAccountId: awsAccountID,
-		AwsRoleArn:   "arn:aws:iam::" + awsAccountID + ":role/ksoc-connect",
+	payload := &RegistrationPayload{
+		Type: "aws",
+		Credentials: Credentials{
+			AWSAccount: AWSAccountCredential{
+				AWSAccountID: awsAccountID,
+				AWSRoleArn:   "arn:aws:iam::" + awsAccountID + ":role/ksoc-connect",
+			},
+		},
 	}
 
 	statusCode, _, diags := request.AuthenticatedRequest(ctx, apiUrlBase, httpMethod, targetURI, accessKey, secretKey, payload)

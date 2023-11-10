@@ -37,7 +37,8 @@ func New(version string) func() *schema.Provider {
 				},
 			},
 			ResourcesMap: map[string]*schema.Resource{
-				"ksoc_aws_register": resourceAwsRegister(),
+				"ksoc_aws_register":   resourceAwsRegister(),
+				"ksoc_azure_register": resourceAzureRegister(),
 			},
 			ConfigureContextFunc: configureProvider,
 		}
@@ -60,4 +61,24 @@ func configureProvider(ctx context.Context, d *schema.ResourceData) (interface{}
 	}
 
 	return &config, nil
+}
+
+type RegistrationPayload struct {
+	Type        string      `json:"type"`
+	Credentials Credentials `json:"credentials"`
+}
+
+type Credentials struct {
+	AzureSubscription AzureSubscriptionCredential `json:"azure_subscription"`
+	AWSAccount        AWSAccountCredential        `json:"aws_account"`
+}
+
+type AWSAccountCredential struct {
+	AWSAccountID string `db:"aws_account_id" json:"aws_account_id"`
+	AWSRoleArn   string `db:"aws_role_arn" json:"aws_role_arn"`
+}
+
+type AzureSubscriptionCredential struct {
+	TenantID       string `json:"tenant_id"`
+	SubscriptionID string `json:"subscription_id"`
 }

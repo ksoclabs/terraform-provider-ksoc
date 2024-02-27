@@ -90,13 +90,9 @@ func resourceAwsRegisterGeneric(ctx context.Context, httpMethod string, d *schem
 	awsAccountID := d.Get("aws_account_id").(string)
 
 	payload := &RegistrationPayload{
-		Type: "aws",
-		Credentials: Credentials{
-			AWSAccount: AWSAccountCredential{
-				AWSAccountID: awsAccountID,
-				AWSRoleArn:   "arn:aws:iam::" + awsAccountID + ":role/ksoc-connect",
-			},
-		},
+		Type:         "aws",
+		AWSAccountID: awsAccountID,
+		AWSRoleArn:   "arn:aws:iam::" + awsAccountID + ":role/ksoc-connect",
 	}
 
 	statusCode, _, diags := request.AuthenticatedRequest(ctx, apiUrlBase, httpMethod, targetURI, accessKey, secretKey, payload)

@@ -64,21 +64,9 @@ func configureProvider(ctx context.Context, d *schema.ResourceData) (interface{}
 }
 
 type RegistrationPayload struct {
-	Type        string      `json:"type"`
-	Credentials Credentials `json:"credentials"`
-}
-
-type Credentials struct {
-	AzureSubscription AzureSubscriptionCredential `json:"azure_subscription"`
-	AWSAccount        AWSAccountCredential        `json:"aws_account"`
-}
-
-type AWSAccountCredential struct {
-	AWSAccountID string `db:"aws_account_id" json:"aws_account_id"`
-	AWSRoleArn   string `db:"aws_role_arn" json:"aws_role_arn"`
-}
-
-type AzureSubscriptionCredential struct {
-	TenantID       string `json:"tenant_id"`
-	SubscriptionID string `json:"subscription_id"`
+	Type                string `json:"type"`
+	AWSAccountID        string `db:"aws_account_id" json:"aws_account_id"`
+	AWSRoleArn          string `db:"aws_role_arn" json:"aws_role_arn"`
+	AzureSubscriptionID string `db:"azure_subscription_id" json:"azure_subscription_id"`
+	AzureTenantID       string `db:"azure_tenant_id" json:"azure_tenant_id"`
 }

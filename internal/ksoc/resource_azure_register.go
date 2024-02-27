@@ -91,13 +91,9 @@ func resourceAzureRegisterGeneric(ctx context.Context, httpMethod string, d *sch
 	subscriptionId := d.Get("subscription_id").(string)
 
 	payload := &RegistrationPayload{
-		Type: "azure",
-		Credentials: Credentials{
-			AzureSubscription: AzureSubscriptionCredential{
-				TenantID:       tenantID,
-				SubscriptionID: subscriptionId,
-			},
-		},
+		Type:                "azure",
+		AzureTenantID:       tenantID,
+		AzureSubscriptionID: subscriptionId,
 	}
 
 	statusCode, _, diags := request.AuthenticatedRequest(ctx, apiUrlBase, httpMethod, targetURI, accessKey, secretKey, payload)

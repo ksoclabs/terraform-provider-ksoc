@@ -60,7 +60,7 @@ func resourceAwsRegisterCreate(ctx context.Context, d *schema.ResourceData, meta
 func resourceAwsRegisterRead(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	apiUrlBase := config.KsocApiUrl
-	targetURI := apiUrlBase + "/cloud/aws/register"
+	targetURI := apiUrlBase + "/cloud/register"
 	err := d.Set("api_path", targetURI)
 	if err != nil {
 		return diag.Errorf("Error setting api_path: %s", err)

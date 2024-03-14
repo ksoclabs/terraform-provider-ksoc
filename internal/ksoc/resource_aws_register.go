@@ -60,7 +60,7 @@ func resourceAwsRegisterCreate(ctx context.Context, d *schema.ResourceData, meta
 func resourceAwsRegisterRead(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	apiUrlBase := config.KsocApiUrl
-	targetURI := apiUrlBase + "/cloud/aws/register"
+	targetURI := apiUrlBase + "/cloud/register"
 	err := d.Set("api_path", targetURI)
 	if err != nil {
 		return diag.Errorf("Error setting api_path: %s", err)
@@ -90,13 +90,9 @@ func resourceAwsRegisterGeneric(ctx context.Context, httpMethod string, d *schem
 	awsAccountID := d.Get("aws_account_id").(string)
 
 	payload := &RegistrationPayload{
-		Type: "aws",
-		Credentials: Credentials{
-			AWSAccount: AWSAccountCredential{
-				AWSAccountID: awsAccountID,
-				AWSRoleArn:   "arn:aws:iam::" + awsAccountID + ":role/ksoc-connect",
-			},
-		},
+		Type:         "aws",
+		AWSAccountID: awsAccountID,
+		AWSRoleArn:   "arn:aws:iam::" + awsAccountID + ":role/ksoc-connect",
 	}
 
 	statusCode, _, diags := request.AuthenticatedRequest(ctx, apiUrlBase, httpMethod, targetURI, accessKey, secretKey, payload)
